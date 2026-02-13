@@ -23,12 +23,15 @@
 <body>
     <div id="main">
         <div id="error"><a href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a> (<a href="http://firefox.com.cn/download/">Firefox</a>)</div>
-        <audio autoplay="autoplay" height="100" width="100" id="myAudio">
-            <source src="aud.mp3" type="audio/mp3" />
-            <embed height="100" width="100" src="aud.mp3" />
+        <audio height="100" width="100" id="myAudio">
+            <source src="file/audio.mp3" type="audio/mp3" />
+            <embed height="100" width="100" src="file/audio.mp3" />
         </audio>
         <div id="wrap">
             <div id="text">
+                <div id="click-button" style="cursor: pointer; font-size: 24px; font-weight: bold; color: #ff69b4; text-align: center; padding: 20px; border: 2px solid #ff69b4; border-radius: 10px; margin-top: 200px;">
+                    💌 Click Me 💌
+                </div>
                 <div id="code">
                     <span class="say">Hey you 💞</span><br>
                     <span class="say">Happy Birthday 🎈</span><br>
@@ -43,6 +46,7 @@
                 <span id="clock">577 days 0 hours 0 minutes 0 seconds</span> <!-- Change to "6940 days..." if needed -->
             </div>
             <canvas id="canvas" width="1100" height="680"></canvas>
+            <div id="message-box"></div>
         </div>
     </div>
 
@@ -100,6 +104,18 @@
         var seed = tree.seed;
         var foot = tree.footer;
         var hold = 1;
+        var animationStarted = false;
+
+        var clickButton = $('#click-button');
+        clickButton.click(function() {
+            playAudio();
+            if (!animationStarted) {
+                animationStarted = true;
+                clickButton.hide();
+                hold = 0;
+                runAsync().start();
+            }
+        });
 
         canvas.click(function(e) {
             playAudio();
@@ -167,16 +183,21 @@
         var textAnimate = eval(Jscex.compile("async", function () {
             $("#code").show().typewriter();
         }));
+
+        var messageAnimate = eval(Jscex.compile("async", function () {
+            timeElapse(new Date(2026, 1, 13)); // February 13, 2026
+            $("#message-box").show();
+            $await(Jscex.Async.sleep(500));
+        }));
 	    
         var runAsync = eval(Jscex.compile("async", function () {
             $await(seedAnimate());
             $await(growAnimate());
             $await(flowAnimate());
             $await(moveAnimate());
-            textAnimate().start();
+            $await(textAnimate());
+            $await(messageAnimate());
         }));
-
-        runAsync().start();
     })();
     </script>
 </body>
