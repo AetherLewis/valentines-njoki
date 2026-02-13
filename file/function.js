@@ -56,7 +56,4 @@ function timeElapse(date){
 	var result = "Days <span class=\"digit\">" + days + "</span> Hours <span class=\"digit\">" + hours + "</span> Minutes <span class=\"digit\">" + minutes; 
 	$("#clock").html(result);
 
-	var text = "Hey Anna,\nevery day with you makes life brighter.\nI miss you and can't wait to see you again.\nI love you ❤️❤️❤️❤️❤️\nI miss you lots🥺😭\nHAPPY VALENTINE'S DAY ML 🎉💐🌹🌹🌹💐";
-	$("#message-box").html(text.replace(/\n/g, '<br>'));
-
 }
